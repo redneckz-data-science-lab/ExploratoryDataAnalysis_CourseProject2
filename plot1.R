@@ -14,7 +14,6 @@ total.emissions <- NEI[, sum(Emissions), by = year]
 total.emissions[, Total := V1]
     
 with(total.emissions, {
-    print(as.character(year))
     plot(Total ~ year, main = "Total Emissions PM2.5",
          xlab = "Year", ylab = "Total Emissions, in tons")
     axis(1, at = year, labels = as.character(year))
