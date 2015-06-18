@@ -17,11 +17,12 @@ total.emissions[, Total := V1]
 total.emissions[, type := factor(type)]
 
 g <- ggplot(total.emissions, aes(year, Total, color = type)) +
-        facet_grid(type ~ .) +
-        geom_smooth(method = "lm") +
-        labs(title = "Total emissions PM2.5 in the Baltimore City") +
-        labs(x = "Year", y = "Total Emissions, in tons")
-g + geom_point(size = 4)
+    geom_point(size = 2) +
+    facet_grid(type ~ .) +
+    geom_smooth(method = "lm") +
+    labs(title = "Total emissions PM2.5 in the Baltimore City") +
+    labs(x = "Year", y = "Total Emissions, in tons")
+print(g)
 
 d <- dev.copy(png, filename = "plot3.png", width = 640, height = 2 * 480)
 dev.off(d)
