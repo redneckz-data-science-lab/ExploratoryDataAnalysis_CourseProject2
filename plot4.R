@@ -10,17 +10,16 @@ if (!exists("SCC")) {
 
 # Across the United States, how have emissions from coal combustion-related sources
 # changed from 1999–2008?
-total.emissions <- NEI[, sum(Emissions), by = list(type, year)]
+coal.combustion.SCC <- SCC[grepl("fuel comb.+ coal", EI.Sector, ignore.case = T)][["SCC"]]
+total.emissions <- NEI[SCC %in% coal.combustion.SCC, sum(Emissions), by = year]
 total.emissions[, Total := V1]
-total.emissions[, type := factor(type)]
 
-g <- ggplot(total.emissions, aes(year, Total, color = type)) +
+g <- ggplot(total.emissions, aes(year, Total)) +
     geom_point(size = 2) +
-    facet_grid(type ~ .) +
     geom_smooth(method = "lm") +
-    labs(title = "Total emissions PM2.5 in the Baltimore City") +
+    labs(title = "Total emissions PM2.5 from coal combustion-related sources") +
     labs(x = "Year", y = "Total Emissions, in tons")
 print(g)
 
-d <- dev.copy(png, filename = "plot3.png", width = 640, height = 2 * 480)
+d <- dev.copy(png, filename = "plot4.png", width = 640, height = 480)
 dev.off(d)
